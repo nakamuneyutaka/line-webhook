@@ -8,6 +8,16 @@ import json  # JSONデータのログ出力用
 
 app = Flask(__name__)
 
+@app.route("/", methods=["GET"])
+def home():
+    return "Hello, Render!", 200
+
+@app.route("/callback", methods=["POST"])
+def callback():
+    data = request.json
+    print(data)  # LINEから送られた内容をログに出力（デバッグ用）
+    return "OK", 200
+
 from flask import Flask, request, jsonify
 import requests
 import os
@@ -96,10 +106,6 @@ def fetch_instagram_data():
     else:
         return jsonify({"error": "Failed to fetch Instagram data", "status": response.status_code})
 
-# ✅ /callback エンドポイントを追加
-@app.route("/callback", methods=["POST"])
-def callback():
-    return jsonify({"status": "success"}), 200
 
 # Flaskアプリを実行
 if __name__ == "__main__":
