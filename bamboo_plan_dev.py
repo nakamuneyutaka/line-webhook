@@ -41,7 +41,12 @@ app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///bamboo_plan.db'
 
 # SQLAlchemyのインスタンスを1回だけ作成
-db = SQLAlchemy(app)
+# 正しい書き方（これを1か所だけ残す）
+from flask_sqlalchemy import SQLAlchemy
+
+app = Flask(__name__)
+db = SQLAlchemy(app)  # ←これを1か所だけにする
+
 
 # ユーザーデータのデータベースモデル
 class User(db.Model):
